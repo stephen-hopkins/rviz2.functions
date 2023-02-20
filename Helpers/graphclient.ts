@@ -3,7 +3,7 @@ import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-grap
 import { Client } from "@microsoft/microsoft-graph-client";
 
 export function createGraphClient(): Client | string {
-  var envKeys = Object.keys(process.env);
+  const envKeys = Object.keys(process.env);
   if (
     !envKeys.includes("TenantId") ||
     !envKeys.includes("ClientId") ||

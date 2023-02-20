@@ -1,6 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { createGraphClient } from "../Helpers/graphclient";
-import { RvizUser } from "../Models/RvizUser";
+import { createRvizUser, RvizUser } from "../Models/RvizUser";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   const graphClient = createGraphClient();
@@ -13,15 +13,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   try {
     const graphRes = await graphClient.api("/users/").select(userFields).get();
     if (Array.isArray(graphRes.value)) {
-      const results = graphRes.value.map((u) => {
-        return {
-          id: u.id,
-          displayName: u.displayName,
-          givenName: u.givenName,
-          surname: u.surname,
-          jobTitle: u.jobTitle,
-        } as RvizUser;
-      });
+      const results = graphRes.value.map(createRvizUser);
       context.res = { body: results };
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

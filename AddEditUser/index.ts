@@ -1,5 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { createGraphClient } from "../Helpers/graphclient";
+import { validate } from "../Helpers/validate";
 import { createB2cUser } from "../Models/B2cUser";
 import { createRvizUser, NewRvizUser } from "../Models/RvizUser";
 
@@ -34,16 +35,20 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   const newB2cUser = createB2cUser(newUser);
 
   try {
-    const createdB2cUser = await graphClient.api("/user").post(newB2cUser);
-    const createdRvizUser = createRvizUser(createdB2cUser);
+    await graphClient.api("/users").post(newB2cUser);
+    // the returned object from the post call doesn't have much in it so let's return nothing for now
     context.res = {
-      body: createdRvizUser,
+      status: 201,
     };
+
     return;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     context.log.error("Error calling graph API", error);
-    context.res = { status: 400 };
+    context.res = {
+      status: 400,
+      body: error.message ?? error,
+    };
   }
 };
 
