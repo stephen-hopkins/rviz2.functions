@@ -1,4 +1,4 @@
-import { InternalExternal, NewRvizUser, SubscriptionStatus, UserLevel } from "./RvizUser";
+import { InternalExternal, NewRvizUser, RvizUserFields, SubscriptionStatus, UserLevel } from "./RvizUser";
 
 export type B2cUser = {
   id: string;
@@ -29,7 +29,7 @@ type PasswordProfile = {
 
 type PasswordPolicy = "DisableStrongPassword" | "DisablePasswordExpiration";
 
-export function createB2cUser(rvizUser: NewRvizUser) {
+export function createNewB2cUser(rvizUser: NewRvizUser) {
   return {
     displayName: rvizUser.displayName,
     givenName: rvizUser.givenName,
@@ -50,5 +50,17 @@ export function createB2cUser(rvizUser: NewRvizUser) {
       forceChangePasswordNextSignIn: true,
     },
     passwordPolicies: "DisablePasswordExpiration",
+  } as B2cUser;
+}
+
+export function createExistingB2cUser(rvizUser: RvizUserFields) {
+  return {
+    displayName: rvizUser.displayName,
+    givenName: rvizUser.givenName,
+    surname: rvizUser.surname,
+    jobTitle: rvizUser.jobTitle,
+    extension_bb8c6b6c043d4874965ca693e13a3e1e_Internal_External: rvizUser.internalExternal,
+    extension_bb8c6b6c043d4874965ca693e13a3e1e_Level: rvizUser.level,
+    extension_bb8c6b6c043d4874965ca693e13a3e1e_Subscription_Status: rvizUser.subscriptionStatus,
   } as B2cUser;
 }

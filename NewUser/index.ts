@@ -1,8 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { createGraphClient } from "../Helpers/graphclient";
 import { validate } from "../Helpers/validate";
-import { createB2cUser } from "../Models/B2cUser";
-import { createRvizUser, NewRvizUser } from "../Models/RvizUser";
+import { createNewB2cUser } from "../Models/B2cUser";
+import { NewRvizUser } from "../Models/RvizUser";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   const newUser = req.body as NewRvizUser;
@@ -32,7 +32,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     return;
   }
 
-  const newB2cUser = createB2cUser(newUser);
+  const newB2cUser = createNewB2cUser(newUser);
 
   try {
     await graphClient.api("/users").post(newB2cUser);

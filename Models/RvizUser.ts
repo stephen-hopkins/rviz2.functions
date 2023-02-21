@@ -5,7 +5,7 @@ import { B2cUser } from "./B2cUser";
 // That doesn't seem worth it at the moment
 // Best solution would be to publish this to npm, either public or private (paid)
 
-type RvizUserFields = {
+export type RvizUserFields = {
   displayName: string;
   givenName: string;
   surname: string;

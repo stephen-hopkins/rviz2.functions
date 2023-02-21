@@ -14,5 +14,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/AddEditUser/index.js"
+  "scriptFile": "../dist/NewUser/index.js"
 }
