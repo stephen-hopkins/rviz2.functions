@@ -1,5 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { createGraphClient } from "../Helpers/graphclient";
+import isAdmin from "../Helpers/isAdmin";
 import { createRvizUser, RvizUser } from "../Models/RvizUser";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {

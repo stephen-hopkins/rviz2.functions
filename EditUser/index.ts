@@ -1,10 +1,17 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { createGraphClient } from "../Helpers/graphclient";
+import isAdmin from "../Helpers/isAdmin";
 import { validate } from "../Helpers/validate";
 import { createExistingB2cUser } from "../Models/B2cUser";
 import { RvizUserFields } from "../Models/RvizUser";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+  if (!isAdmin(req.headers)) {
+    context.log.error("Attempt to edit user by non admin");
+    context.res = { status: 401 };
+    return;
+  }
+
   const editUserId = context.bindingData.id;
   const editUser = req.body as RvizUserFields;
 
