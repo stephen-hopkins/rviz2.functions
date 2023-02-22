@@ -47,7 +47,7 @@ export function createNewB2cUser(rvizUser: NewRvizUser) {
     ],
     passwordProfile: {
       password: rvizUser.password,
-      forceChangePasswordNextSignIn: true,
+      forceChangePasswordNextSignIn: false,
     },
     passwordPolicies: "DisablePasswordExpiration",
   } as B2cUser;
