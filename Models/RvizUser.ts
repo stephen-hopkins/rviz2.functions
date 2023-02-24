@@ -11,9 +11,9 @@ export type RvizUserFields = {
   surname: string;
   email: string;
   jobTitle: string;
-  internalExternal: string;
-  level: string;
-  subscriptionStatus: string;
+  internalExternal: InternalExternal;
+  level: UserLevel;
+  subscriptionStatus: SubscriptionStatus;
 };
 
 export type NewRvizUser = RvizUserFields & {
@@ -24,23 +24,25 @@ export type RvizUser = RvizUserFields & {
   id: string;
 };
 
-export type InternalExternal = "Internal" | "External";
-export type UserLevel = "Admin" | "Super User" | "User";
-export type SubscriptionStatus = "Free" | "Trial" | "Pro";
+export const internalExternalValues = ["Internal", "External"] as const;
+export type InternalExternal = (typeof internalExternalValues)[number];
+
+export const userLevelValues = ["Admin", "Super User", "User"] as const;
+export type UserLevel = (typeof userLevelValues)[number];
+
+export const subscriptionStatusValues = ["Free", "Trial", "Pro"];
+export type SubscriptionStatus = (typeof subscriptionStatusValues)[number];
 
 export function createRvizUser(b2cUser: B2cUser) {
-  const emailSignIn = b2cUser.identities.find((i) => i.signInType === "emailAddress");
-  const email = emailSignIn ? emailSignIn.issuerAssignedId : "";
-
   return {
     id: b2cUser.id,
     displayName: b2cUser.displayName,
     givenName: b2cUser.givenName,
     surname: b2cUser.surname,
-    email,
+    email: b2cUser.mail,
     jobTitle: b2cUser.jobTitle,
-    internalExternal: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Internal_External ?? '',
-    level: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Level ?? '',
-    subscriptionStatus: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Subscription_Status ?? '',
+    internalExternal: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Internal_External ?? "",
+    level: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Level ?? "",
+    subscriptionStatus: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Subscription_Status ?? "",
   } as RvizUser;
 }

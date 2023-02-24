@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { createGraphClient } from "../Helpers/graphclient";
+import { createB2cGraphClient } from "../Helpers/graphclient";
 import isAdmin from "../Helpers/isAdmin";
 import { validate } from "../Helpers/validate";
 import { createExistingB2cUser } from "../Models/B2cUser";
@@ -24,7 +24,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     return;
   }
 
-  const graphClient = createGraphClient();
+  const graphClient = createB2cGraphClient();
   if (typeof graphClient === "string") {
     context.log.error(graphClient);
     context.res = { status: 404 };
