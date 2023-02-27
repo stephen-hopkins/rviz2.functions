@@ -34,12 +34,20 @@ export const subscriptionStatusValues = ["Free", "Trial", "Pro"];
 export type SubscriptionStatus = (typeof subscriptionStatusValues)[number];
 
 export function createRvizUser(b2cUser: B2cUser) {
+  let mail = b2cUser.mail;
+  if (!mail || mail === "") {
+    const rvizOn = b2cUser.identities.find((i) => i.issuer === "rvizcouk.onmicrosoft.com");
+    if (rvizOn) {
+      mail = rvizOn.issuerAssignedId;
+    }
+  }
+
   return {
     id: b2cUser.id,
     displayName: b2cUser.displayName,
     givenName: b2cUser.givenName,
     surname: b2cUser.surname,
-    email: b2cUser.mail,
+    email: mail,
     jobTitle: b2cUser.jobTitle,
     internalExternal: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Internal_External ?? "",
     level: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Level ?? "",
