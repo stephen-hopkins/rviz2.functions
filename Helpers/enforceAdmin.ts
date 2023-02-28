@@ -11,9 +11,9 @@ export default function enforceAdmin(context: Context) {
 }
 
 function isAdmin(headers: HttpRequestHeaders) {
-  const authHeader = headers["authentication"];
+  const authHeader = headers["authorization"];
   if (authHeader && authHeader !== "") {
-    const token = jwtDecode(headers["authentication"]) as object;
+    const token = jwtDecode(authHeader.substring(7)) as object;
     // eslint-disable-next-line no-prototype-builtins
     if (token.hasOwnProperty("extension_Level")) {
       const level = token["extension_Level"] as string;
