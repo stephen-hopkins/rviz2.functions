@@ -1,8 +1,13 @@
 import { AzureFunction, Context } from "@azure/functions";
+import enforceAdmin from "../Helpers/enforceAdmin";
 import { createB2cGraphClient } from "../Helpers/graphclient";
 import { createRvizUser } from "../Models/RvizUser";
 
 const httpTrigger: AzureFunction = async function (context: Context): Promise<void> {
+  if (!enforceAdmin(context)) {
+    return;
+  }
+
   const graphClient = createB2cGraphClient();
   if (typeof graphClient === "string") {
     context.log.error(graphClient);

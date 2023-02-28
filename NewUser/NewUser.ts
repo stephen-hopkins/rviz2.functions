@@ -1,11 +1,16 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { Client } from "@microsoft/microsoft-graph-client";
+import enforceAdmin from "../Helpers/enforceAdmin";
 import { createADGraphClient, createB2cGraphClient } from "../Helpers/graphclient";
 import { validate } from "../Helpers/validate";
-import { createExistingB2cUser, createNewB2cExternalUser, createNewB2cInternalUser } from "../Models/B2cUser";
+import { createNewB2cExternalUser, createNewB2cInternalUser } from "../Models/B2cUser";
 import { NewRvizUser } from "../Models/RvizUser";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+  if (!enforceAdmin(context)) {
+    return;
+  }
+
   const graphClient = createB2cGraphClient();
   if (typeof graphClient === "string") {
     context.log.error(graphClient);

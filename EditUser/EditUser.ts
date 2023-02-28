@@ -1,14 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { createB2cGraphClient } from "../Helpers/graphclient";
-import isAdmin from "../Helpers/isAdmin";
 import { validate } from "../Helpers/validate";
 import { createExistingB2cUser } from "../Models/B2cUser";
 import { RvizUserFields } from "../Models/RvizUser";
+import enforceAdmin from "../Helpers/enforceAdmin";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  if (!isAdmin(req.headers)) {
-    context.log.error("Attempt to edit user by non admin");
-    context.res = { status: 401 };
+  if (!enforceAdmin(context)) {
     return;
   }
 
