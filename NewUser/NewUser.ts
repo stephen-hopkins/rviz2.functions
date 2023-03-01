@@ -136,7 +136,7 @@ async function addB2cUser(newUser: NewRvizUser, graphClient: Client, context: Co
     context.log.error("Error calling graph API", error);
     return {
       status: 400,
-      body: "Error saving b2c user",
+      body: `Error saving b2c user: ${error.message ?? error}`,
     };
   }
 }
