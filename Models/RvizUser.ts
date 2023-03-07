@@ -36,9 +36,8 @@ export type SubscriptionStatus = (typeof subscriptionStatusValues)[number];
 export function createRvizUser(b2cUser: B2cUser) {
   let mail = b2cUser.mail;
   if (!mail || mail === "") {
-    const rvizOn = b2cUser.identities.find((i) => i.issuer === "rvizcouk.onmicrosoft.com");
-    if (rvizOn) {
-      mail = rvizOn.issuerAssignedId;
+    if (b2cUser.otherMails?.length > 0) {
+      mail = b2cUser.otherMails[0];
     }
   }
 

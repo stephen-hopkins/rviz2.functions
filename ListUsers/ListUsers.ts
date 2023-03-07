@@ -30,6 +30,6 @@ const httpTrigger: AzureFunction = async function (context: Context): Promise<vo
 };
 
 const userFields =
-  "id, displayName, identities, givenName, jobTitle, surname, mail, userPrincipalName, extension_bb8c6b6c043d4874965ca693e13a3e1e_Internal_External, extension_bb8c6b6c043d4874965ca693e13a3e1e_Level, extension_bb8c6b6c043d4874965ca693e13a3e1e_Subscription_Status";
+  "id, displayName, identities, givenName, jobTitle, surname, mail, otherMails, userPrincipalName, extension_bb8c6b6c043d4874965ca693e13a3e1e_Internal_External, extension_bb8c6b6c043d4874965ca693e13a3e1e_Level, extension_bb8c6b6c043d4874965ca693e13a3e1e_Subscription_Status";
 
 export default httpTrigger;

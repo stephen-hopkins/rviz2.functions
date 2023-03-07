@@ -7,6 +7,7 @@ export type B2cUser = {
   surname: string;
   jobTitle: string;
   mail: string | null;
+  otherMails: string[];
   userPrincipalName: string;
   extension_bb8c6b6c043d4874965ca693e13a3e1e_Internal_External: InternalExternal;
   extension_bb8c6b6c043d4874965ca693e13a3e1e_Level: UserLevel;
