@@ -49,7 +49,7 @@ export function createRvizUser(b2cUser: B2cUser) {
     email: mail,
     jobTitle: b2cUser.jobTitle,
     internalExternal: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Internal_External ?? "",
-    level: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Level ?? "",
+    level: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Level ?? "User",
     subscriptionStatus: b2cUser.extension_bb8c6b6c043d4874965ca693e13a3e1e_Subscription_Status ?? "",
   } as RvizUser;
 }
